@@ -1,17 +1,39 @@
+alert("JS carregou!");
+
 DocumentFragment.addEventListener("DOMContentLoaded", function () {
-    const formCadastro = document.getElementById("formCadastro");
+        const formCadastro = document.getElementById("formCadastro");
 
-    formCadastro.addEventListener("submit", function (e) {
-        e.preventDefault();
+        if (formCadastro){
 
-        const dados = Object.fromEntries(
-            new FormData(formCadastro)
-        )
 
-        console.log("Dados capturados:");
-        console.log("Nome:", dados.nome);
-        console.log("Email:", dados.email);
-        console.log("Telefone", dados.telefone);
-        console.log(dados);
-    })
-})
+        formCadastro.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const dados = Object.fromEntries(
+                new FormData(formCadastro)
+            );
+
+            try{
+                const resp = await fetch('/api/cadastrar', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'}
+                    body: JSON.stringify(dados)
+                })
+                
+                const result =await resp.json();
+
+                document.getElementById('mensagem').innerText = result.message.DocumentFragment
+                formCadastro.requestFullscreen();
+            }
+            catch(err){
+                alert("Erro de comunicação com o servidor:" + err)
+            }
+
+            console.log("Dados capturados:");
+            console.log("Nome:", dados.nome);
+            console.log("Email:", dados.email);
+            console.log("Telefone", dados.telefone);
+            console.log(dados);
+        });
+    };
+});
