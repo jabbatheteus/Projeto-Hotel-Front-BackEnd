@@ -1,5 +1,5 @@
 import os
-from flask import Flask, send_from_directory
+from flask import Flask, request, send_from_directory, Request, jsonify
 import openpyxl
 from datetime import (
     datetime,
@@ -54,6 +54,65 @@ def consulta_page():
 @app.route("/alterar")
 def alterar_page():
     return send_from_directory(FRONTEND_DIR, "alterar.html")
+
+@app.route("/assets/<path:filename>")
+def assets(filename):
+    return send_from_directory("../frontend/assets, filename")
+
+@app.route("/cadastrar", methods=["POST"])
+def cadastrar_cliente():
+    
+    try:
+        data = request.json
+        required_fields = ["nome", "cpf", "email", "telefone", "endereço"]
+        if not all(field in data and data[field] for field in required_fields):
+            return(
+                jsonify(
+                    {
+                        "status": "error",
+                        "message": "Todos os campos obrigatórios devem ser preenchidos.",
+                    }
+                ),
+               400, 
+            )
+        workbook = openpyxl.load_workbook(EXCEL_FILE)
+        sheet = workbook.active
+        last_id = 0
+        if sheet.max_row > 1:
+            last_id = sheet.cell(row=sheet.max_row, column=1).value or 0
+            new_id = last_id + 1
+
+        novo_client = [
+            new_id,
+            data.get("nome"),
+            data.get("cpf"),
+            data.get("email"),
+            data.get("telefone"),
+            data.get("endereco"),
+            data.get("observacoes", ""),
+            datetime.now().strftime("&Y-%m-&d"),
+        ]
+
+        sheet.append(novo_client)
+        workbook.save(EXCEL_FILE)
+
+        return(
+            jsonify(
+                {
+                    "status": "success",
+                    "message": "Cliente cadastrado com sucesso!",
+                    "id": new_id,
+                }
+
+            ),
+            201,
+        )
+    
+    except Exception as e:
+        return(
+            jsonify({"status": "error", "message": f"Erro ao salvar no servidor: {e}"}),
+            500,
+        )
 
 
 if __name__=="__main__":
