@@ -39,7 +39,6 @@ def int_excel():
         sheet.append(COLUMNS)
         workbook.save(EXCEL_FILE)
 
-int_excel()
 
 app = Flask(__name__, static_folder=STATIC_DIR, static_url_path="/" + STATIC_DIR)
 
@@ -57,14 +56,14 @@ def alterar_page():
 
 @app.route("/assets/<path:filename>")
 def assets(filename):
-    return send_from_directory("../frontend/assets, filename")
+    return send_from_directory("../frontend/assets", filename)
 
 @app.route("/cadastrar", methods=["POST"])
 def cadastrar_cliente():
     
     try:
         data = request.json
-        required_fields = ["nome", "cpf", "email", "telefone", "endereço"]
+        required_fields = ["nome", "cpf", "email", "telefone", "endereco"]
         if not all(field in data and data[field] for field in required_fields):
             return(
                 jsonify(
@@ -80,7 +79,7 @@ def cadastrar_cliente():
         last_id = 0
         if sheet.max_row > 1:
             last_id = sheet.cell(row=sheet.max_row, column=1).value or 0
-            new_id = last_id + 1
+        new_id = last_id + 1
 
         novo_client = [
             new_id,
@@ -90,7 +89,7 @@ def cadastrar_cliente():
             data.get("telefone"),
             data.get("endereco"),
             data.get("observacoes", ""),
-            datetime.now().strftime("&Y-%m-&d"),
+            datetime.now().strftime("%Y-%m-%d"),
         ]
 
         sheet.append(novo_client)
@@ -119,5 +118,5 @@ if __name__=="__main__":
     print("BASE_DIR:", BASE_DIR)
     print("FRONTEND_DIR:", FRONTEND_DIR)
     print("STATIC_DIR", STATIC_DIR)
+    int_excel()
     app.run(debug=True)
-    app.run="int.excel"

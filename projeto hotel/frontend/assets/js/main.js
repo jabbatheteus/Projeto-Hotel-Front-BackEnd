@@ -1,6 +1,6 @@
 alert("JS carregou!");
 
-DocumentFragment.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
         const formCadastro = document.getElementById("formCadastro");
 
         if (formCadastro){
@@ -14,19 +14,19 @@ DocumentFragment.addEventListener("DOMContentLoaded", function () {
             );
 
             try{
-                const resp = await fetch('/api/cadastrar', {
+                const resp = await fetch('/cadastrar', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(dados)
-                })
+                });f
                 
                 const result =await resp.json();
 
-                document.getElementById('mensagem').innerText = result.message.DocumentFragment
+                document.getElementById('mensagem').innerText = result.message;
                 formCadastro.reset();
             }
             catch(err){
-                alert("Erro de comunicação com o servidor:" + err)
+                alert("Erro de comunicação com o servidor:" + err);
             }
 
             console.log("Dados capturados:");
