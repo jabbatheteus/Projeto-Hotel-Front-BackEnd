@@ -16,11 +16,11 @@ document.addEventListener("DOMContentLoaded", function () {
             try{
                 const resp = await fetch('/cadastrar', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(dados)
-                });f
+                });
                 
-                const result =await resp.json();
+                const result = await resp.json();
 
                 document.getElementById('mensagem').innerText = result.message;
                 formCadastro.reset();

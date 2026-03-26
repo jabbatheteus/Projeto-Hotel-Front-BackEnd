@@ -14,7 +14,7 @@ FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
 
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 
-DB_DIR = os.path.join(os.path.dirname(__file__) ,"..", "db")
+DB_DIR = os.path.join(os.path.dirname(__file__),"..", "db")
 EXCEL_FILE = os.path.join(DB_DIR, "client.xlsx")
 
 COLUMNS = [
@@ -28,7 +28,7 @@ COLUMNS = [
     "Data Cadastro",
 ]
 
-def int_excel():
+def init_excel():
     if not os.path.exists(DB_DIR):
         os.makedirs(DB_DIR)
     
@@ -83,7 +83,7 @@ def cadastrar_cliente():
 
         novo_client = [
             new_id,
-            data.get("nome"),
+            data.get("name"),
             data.get("cpf"),
             data.get("email"),
             data.get("telefone"),
@@ -118,5 +118,5 @@ if __name__=="__main__":
     print("BASE_DIR:", BASE_DIR)
     print("FRONTEND_DIR:", FRONTEND_DIR)
     print("STATIC_DIR", STATIC_DIR)
-    int_excel()
+    init_excel()
     app.run(debug=True)
