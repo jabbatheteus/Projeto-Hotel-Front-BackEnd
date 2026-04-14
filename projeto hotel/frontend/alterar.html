@@ -7,5 +7,52 @@
 </head>
 <body>
     
+
+    <div>
+        <h2> Alterar Dados do Cliente</h2>
+
+        <form id="formAlterar">
+            <input type="hidden" id="clienteId">
+
+            <div>
+                <div>
+                    <label>Nome:</label>
+                    <input type="text" id="nome" required>
+                </div>
+
+                <div>
+                    <label>CPF:</label>
+                    <input type="text" id="cpf" required>
+                </div>
+
+                <div>
+                    <label>Email:</label>
+                    <input type="text" id="email" required>
+                </div>
+
+                <div>
+                    <label>Telefone:</label>
+                    <input type="text" id="telefone" required>
+                </div>
+
+                <div>
+                    <label>Endereço:</label>
+                    <input type="text" id="endereco" required>
+                </div>
+
+                <div>
+                    <label>Observações:</label>
+                    <textarea id="observacoes"></textarea>
+                </div>
+
+            </div>
+
+            <div>
+                <button type="submit">Salvar Alterações</button>
+            </div>
+        </form>
+        <div id="mensagem"></div>
+    </div>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>

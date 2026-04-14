@@ -53,5 +53,27 @@ document.addEventListener("DOMContentLoaded", function () {
             })
         })
     }
+
+    formAlterar.addEventListener('submit', async(e) =>{
+        e.preventDefault();
+
+        const dados = {
+            nome: nome.value,
+            cpf: cpf.value,
+            email:email.value,
+            telefone: telefone.value,
+            endereco: endereco.value,
+            observacoes: observacoes.value
+        }
+
+        const resp = await fetch(`/api/atalizar/${id}`,{
+            method: 'POST',
+            headers: { 'Content-Type': 'appliction/json' },
+            body: JSON.stringify(dados)
+        });
+
+        const result = await resp.json();
+        mensagem.innerText = result.message;
+    });
 });
 
