@@ -127,4 +127,11 @@ createSnowflakes(40);
 
 function drawSnow(){
     ctx.clearRect(0,0, create.width, canvas.width);
+    ctx.fillStyle = "white";
+    ctx.beginPath();
+
+
+    for (let flake of snowflakes){
+        ctx
+    }
 }
