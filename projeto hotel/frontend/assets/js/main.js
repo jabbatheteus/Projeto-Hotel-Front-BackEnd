@@ -24,15 +24,13 @@ document.addEventListener("DOMContentLoaded", function () {
     if (btnBuscar) {
         btnBuscar.addEventListener('click', async () => {
             const nome = document.getElementById('campoBusca').value;
-            // CORREÇÃO: Uso de crases para Template Literals
             const resp = await fetch(`/buscar?nome=${nome}`);
             const clientes = await resp.json();
 
             const tabela = document.getElementById('tabelaResultados');
-            tabela.innerHTML = ''; // CORREÇÃO: innerHTML
+            tabela.innerHTML = ''; 
 
             clientes.forEach(cli => {
-                // CORREÇÃO: Uso de crases e sintaxe correta no link de editar
                 const row = `
                 <tr>
                     <td>${cli.ID}</td>
@@ -50,11 +48,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const formAlterar = document.getElementById('formAlterar');
     if (formAlterar) {
         const urlParams = new URLSearchParams(window.location.search);
-        const id = urlParams.get('id'); // ID capturado da URL
+        const id = urlParams.get('id');
         const mensagem = document.getElementById('mensagem');
 
-        // Carregar dados atuais do cliente
-        fetch(`/api/cliente/${id}`) // CORREÇÃO: Uso de crases
+        fetch(`/api/cliente/${id}`) 
             .then(r => r.json())
             .then(cli => {
                 document.getElementById('clienteid').value = cli.ID;
@@ -66,11 +63,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById('observacoes').value = cli.Observações;
             });
 
-        // Evento de salvar alteração
         formAlterar.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Capturando os valores dos inputs corretamente
             const dados = {
                 nome: document.getElementById('nome').value,
                 cpf: document.getElementById('cpf').value,
@@ -81,13 +76,13 @@ document.addEventListener("DOMContentLoaded", function () {
             };
 
             try {
-                const resp = await fetch(`/api/atualizar/${id}`, { // CORREÇÃO: Uso de crases
+                const resp = await fetch(`/api/atualizar/${id}`, { 
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' }, // CORREÇÃO: application
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(dados)
                 });
 
-                const result = await resp.json(); // CORREÇÃO: espaço no await
+                const result = await resp.json(); 
                 mensagem.innerText = result.message;
             } catch (err) {
                 console.error("Erro ao atualizar:", err);
@@ -97,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 const canvas = document.createElement('canvas');
-caanvas.id = 'snowCanvas';
+canvas.id = 'snowCanvas';
 document.body.appendChild(canvas);
 
 const ctx = canvas.getContext('2d');
@@ -105,19 +100,19 @@ const ctx = canvas.getContext('2d');
 let snowflakes = [];
 let mouseX = 0;
 
-function resizeCanvavas(){
+function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }
-resizeCanvavas();
-window.addEventListener('mousemove', e => mouseX = e.mouseX);
+resizeCanvas();
+window.addEventListener('mousemove', e => mouseX = e.clientX);
 
 function createSnowflakes(count) {
-    for (let i = 0; i< count; i++) {
+    for (let i = 0; i < count; i++) {
         snowflakes.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            r: Math.random() * 4+1,
+            r: Math.random() * 4 + 1,
             d: Math.random() + 1
         });
     }
@@ -125,13 +120,28 @@ function createSnowflakes(count) {
 
 createSnowflakes(40);
 
-function drawSnow(){
-    ctx.clearRect(0,0, create.width, canvas.width);
+function drawSnow() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "white";
     ctx.beginPath();
 
-
-    for (let flake of snowflakes){
-        ctx
+    for (let flake of snowflakes) {
+        ctx.moveTo(flake.x, flake.y);
+        ctx.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2);
     }
+    ctx.fill();
+
+    for (let flake of snowflakes) {
+        flake.y += Math.pow(flake.d, 2) + 1;
+        flake.x += Math.sin(mouseX / 100) * 0.5;
+
+        if (flake.y > canvas.height) {
+            flake.y = 0;
+            flake.x = Math.random() * canvas.width;
+        }
+    }
+
+    requestAnimationFrame(drawSnow);
 }
+
+drawSnow();

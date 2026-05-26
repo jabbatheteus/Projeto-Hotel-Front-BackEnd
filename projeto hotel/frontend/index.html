@@ -75,43 +75,39 @@
     <h2 class="text-center mb-4"> Cadastro de Clientes</h2>
     
     <form id="formCadastro" class="p-3 rounded bg-light shadow">
-        <div>
-            <div>
-                <label> Nome:</label>
-                <input type="text" name="nome" required>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label"> Nome:</label>
+                <input type="text" class="form-control" name="nome" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label"> CPF:</label>
+                <input type="text" class="form-control" name="cpf" required>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label"> Email:</label>
+                <input type="email" class="form-control" name="email" required>
             </div>
         </div>
         <div>
-            <div>
-                <label> CPF:</label>
-                <input type="text" name="cpf" required>
+            <div class="col-md-6">
+                <label class="form-label"> Telefone:</label>
+                <input type="text" class="form-control" name="telefone" required>
+            </div>
+        </div>
+
+        <div>
+            <div class="col-12">
+                <label class="form-label"> Endereço:</label>
+                <input type="text" class="form-control" name="endereco" required>
             </div>
         </div>
 
         <div>
             <div>
-                <label> Email:</label>
-                <input type="email" name="email" required>
-            </div>
-        </div>
-        <div>
-            <div>
-                <label> Telefone:</label>
-                <input type="text" name="telefone" required>
-            </div>
-        </div>
-
-        <div>
-            <div>
-                <label> Endereço:</label>
-                <input type="text" name="endereco" required>
-            </div>
-        </div>
-
-        <div>
-            <div>
-                <label> Observação:</label>
-                <textarea type="text" name="observacao" required> </textarea>
+                <label class="form-label"> Observação:</label>
+                <textarea type="text" class="form-control" name="observacao" required> </textarea>
             </div>
         </div>
         
